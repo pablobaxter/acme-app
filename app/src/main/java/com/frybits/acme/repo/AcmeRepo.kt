@@ -6,7 +6,7 @@ import com.frybits.acme.R
 import com.frybits.acme.models.Driver
 import com.frybits.acme.models.Route
 import com.frybits.acme.utils.AcmeAlgo
-import com.frybits.acme.utils.DriverParser
+import com.frybits.acme.utils.AcmeDataParser
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,7 +33,7 @@ interface AcmeRepo {
 class AcmeRepoImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val acmeAlgo: AcmeAlgo,
-    private val driverParser: DriverParser
+    private val acmeDataParser: AcmeDataParser
 ) : AcmeRepo {
 
     // Suspends anything needing this data until it completes, and acts as a cache as well.
@@ -45,7 +45,7 @@ class AcmeRepoImpl @Inject constructor(
         // Do IO work in IO thread
         val json = withContext(Dispatchers.IO) { JSONObject(context.resources.openRawResource(R.raw.input).bufferedReader().readText()) }
         Log.d(LOG_TAG, "$json")
-        val (driverList, routeList) = driverParser.parseJson(json)
+        val (driverList, routeList) = acmeDataParser.parseJson(json)
 
         require(driverList.size == routeList.size) { "Driver-Route list size don't match" }
 

@@ -17,12 +17,12 @@ import javax.inject.Singleton
 private const val SHIPMENTS_KEY = "shipments"
 private const val DRIVERS_KEY = "drivers"
 
-interface DriverParser {
+interface AcmeDataParser {
 
     suspend fun parseJson(jsonObject: JSONObject): Pair<List<Driver>, List<Route>>
 }
 
-class DriverParserImpl @Inject constructor(): DriverParser {
+class AcmeDataParserImpl @Inject constructor(): AcmeDataParser {
 
     // It was unclear if the entire address was to be used, or just the name, so I made a quick regex to split it all, just in case it is only name
     private val addressRegex = "^(?<addressNumber>\\d*)\\s(?<addressName>\\w*\\s\\w*)\\s?(?<dwellingType>Suite|Apt\\.)?\\s?(?<dwellingNumber>\\w*)?\$".toRegex()
@@ -67,9 +67,9 @@ class DriverParserImpl @Inject constructor(): DriverParser {
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DriverParserModule {
+abstract class AcmeDataParserModule {
 
     @Singleton
     @Binds
-    abstract fun bindDriverParser(driverParserImpl: DriverParserImpl): DriverParser
+    abstract fun bindAcmeDataParser(acmeDataParserImpl: AcmeDataParserImpl): AcmeDataParser
 }
