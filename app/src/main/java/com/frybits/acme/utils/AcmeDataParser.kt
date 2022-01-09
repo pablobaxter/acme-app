@@ -25,7 +25,7 @@ interface AcmeDataParser {
 class AcmeDataParserImpl @Inject constructor(): AcmeDataParser {
 
     // It was unclear if the entire address was to be used, or just the name, so I made a quick regex to split it all, just in case it is only name
-    private val addressRegex = "^(?<addressNumber>\\d*)\\s(?<addressName>\\w*\\s\\w*)\\s?(?<dwellingType>Suite|Apt\\.)?\\s?(?<dwellingNumber>\\w*)?\$".toRegex()
+    private val addressRegex = "^(?<addressNumber>\\d*)\\s(?<addressName>[\\w*\\s]*?)(?:\\s?(?<dwellingType>Suite|Apt\\.)\\s(?<dwellingNumber>\\w+))?\$".toRegex()
 
     override suspend fun parseJson(jsonObject: JSONObject): Pair<List<Driver>, List<Route>> {
         // Do this work on a background thread
