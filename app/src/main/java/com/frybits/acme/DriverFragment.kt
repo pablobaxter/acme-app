@@ -38,6 +38,7 @@ class DriverFragment : Fragment() {
             driverRecyclerView.adapter = adapter
 
             val routeTextView = binding.routeTextView
+            val scoreTextView = binding.scoreTextView
 
             // Listener for selected drivers
             adapter.driverSelectedFlow.collect { driver ->
@@ -45,7 +46,9 @@ class DriverFragment : Fragment() {
                     routeTextView.text = ""
                     driverViewModel.resetLastSelectedDriver()
                 } else {
-                    routeTextView.text = driverViewModel.getRouteForDriver(driver).toString()
+                    val (score, route) = driverViewModel.getRouteAndScoreForDriver(driver)
+                    routeTextView.text = route.toString()
+                    scoreTextView.text = "Score: $score"
                 }
             }
         }

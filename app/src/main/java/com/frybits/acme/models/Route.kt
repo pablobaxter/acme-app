@@ -33,4 +33,14 @@ enum class DwellingType(private val type: String) {
     override fun toString(): String {
         return type
     }
+
+    companion object {
+        fun getType(value: String): DwellingType {
+            return when (value) {
+                SUITE.type -> SUITE
+                APARTMENT.type -> APARTMENT
+                else -> SINGLE_FAMILY
+            }
+        }
+    }
 }
