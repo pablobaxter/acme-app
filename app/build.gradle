@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -32,6 +33,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '11'
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     packagingOptions {
